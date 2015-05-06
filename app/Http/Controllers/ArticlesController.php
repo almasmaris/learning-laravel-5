@@ -4,11 +4,17 @@
 use App\Article;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Request;
+use App\Http\Requests\CreateArticleRequest;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+
 
 class ArticlesController extends Controller {
 
+
+	/**
+	 * show all articles
+	 */
 	public function index()
 	{
 		// $articles = \App\Article::all();
@@ -17,6 +23,9 @@ class ArticlesController extends Controller {
 		return view('articles.index', compact('articles'));
 	}
 
+	/**
+	 * show article based on selection
+	 */
 	public function show($id)
 	{
 		$article = Article::findOrFail($id);
@@ -33,13 +42,22 @@ class ArticlesController extends Controller {
 
 	}
 
-
+	/**
+	 * create new article
+	 */
 	public function create()
 	{
 		return view('articles.create');
 	}
-	
-	public function store()
+
+
+	/**
+	 * save new articles
+	 * @param  CreateArticleRequest $request [request validation before save]
+	 * @return Response                      
+	 */
+
+    /*public function store(CreateArticleRequest $request)
 	{
 		// $input = Request::all();
 		// // $input = Request::get('body');
@@ -47,10 +65,21 @@ class ArticlesController extends Controller {
 		// $input['published_at'] = Carbon::now();
 		// // $article = new Article;
 		// // $article->title = $input['title'];
-		Article::create(Request::all());
+		Article::create($request->all());
 
 
 		return redirect('articles');
-	}
-	
+	}*/
+
+    /**
+     * @param CreateArticleRequest|Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, ['title' => 'required', 'body' => 'required']);
+        Article::create($request->all());
+
+        return redirect('articles');
+    }
 }
