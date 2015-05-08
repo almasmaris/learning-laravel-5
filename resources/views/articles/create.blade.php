@@ -27,6 +27,7 @@
 	    <small class="text-danger">{{ $errors->first('published_at') }}</small>
 	</div>
 
+    
 
 	<div class="form-group">
 		{!! Form::submit('Add article', array('class' => 'btn btn-primary form-control')) !!}

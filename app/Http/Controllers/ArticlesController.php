@@ -82,4 +82,16 @@ class ArticlesController extends Controller {
 
         return redirect('articles');
     }
+
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+
+        $article = Article::findorFail('id');
+
+        return view('articles.edit');
+    }
 }
