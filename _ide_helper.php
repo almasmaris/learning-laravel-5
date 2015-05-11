@@ -2551,7 +2551,7 @@ namespace {
     }
 
 
-    class Model extends \Illuminate\Database\Eloquent\Model{
+    class Eloquent extends \Illuminate\Database\Eloquent\Model{
         
         /**
          * Find a model by its primary key.

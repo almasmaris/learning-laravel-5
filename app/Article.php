@@ -1,9 +1,9 @@
 <?php namespace App;
 
 use Carbon\Carbon;
-use Model;
+use Illuminate\Database\Eloquent\Model;
 
-class Article extends Model {
+class Article extends  \Eloquent{
 
 	//fillable attribute
 	protected $fillable = [

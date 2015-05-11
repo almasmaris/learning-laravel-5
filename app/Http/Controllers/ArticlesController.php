@@ -4,7 +4,7 @@
 use App\Article;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateArticleRequest;
+use App\Http\Requests\ArticleRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -72,12 +72,12 @@ class ArticlesController extends Controller {
 	}*/
 
     /**
-     * @param CreateArticleRequest|Request $request
+     * @param ArticleRequest|Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        $this->validate($request, ['title' => 'required', 'body' => 'required']);
+        //$this->validate($request, ['title' => 'required', 'body' => 'required']);
         Article::create($request->all());
 
         return redirect('articles');
@@ -90,8 +90,22 @@ class ArticlesController extends Controller {
     public function edit($id)
     {
 
-        $article = Article::findorFail('id');
+        $article = Article::findorFail($id);
 
-        return view('articles.edit');
+        return view('articles.edit', compact('article'));
     }
+
+    /*
+     * update article
+     * */
+    public function update($id, ArticleRequest $request)
+    {
+        $article = Article::findorFail($id);
+        $article->update($request->all());
+
+        return redirect('articles');
+
+
+    }
+
 }
