@@ -8,6 +8,7 @@ use App\Http\Requests\ArticleRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laracasts\Flash\Flash;
 
 
 class ArticlesController extends Controller {
@@ -95,9 +96,16 @@ class ArticlesController extends Controller {
         //$this->validate($request, ['title' => 'required', 'body' => 'required']);
        //Article::create($request->all());
 
-        $article = new Article($request->all());
+//        $article = new Article($request->all());
 
-        Auth::user()->articles()->save($article);
+        Auth::user()->articles()->create($request->all());
+
+
+//        session()->flash('flash_message', 'Your article has been created!');
+//        session()->flash('flash_message_important', true);
+
+//        flash()->success('Your article has been created!');
+        flash()->overlay('Your articles has been successfully created!', 'Good Job');
 
         return redirect('articles');
     }
