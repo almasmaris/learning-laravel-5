@@ -13,6 +13,12 @@ class Article extends  \Eloquent{
         'user_id' //temporary
 	];
 
+
+    /**
+     * Additional fields to treat as Carbon instances
+     * @var array
+     *
+     */
 	protected $dates = ['published_at'];
 
 	/*

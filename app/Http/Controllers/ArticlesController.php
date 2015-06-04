@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticlesController extends Controller {
 
+    public function __contruct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
 
 	/**
 	 * show all articles
@@ -27,12 +32,16 @@ class ArticlesController extends Controller {
 		return view('articles.index', compact('articles'));
 	}
 
-	/**
-	 * show article based on selection
-	 */
-	public function show($id)
+    /**
+     * show article based on selection
+     * @param Article $article
+     * @return \Illuminate\View\View
+     */
+	public function show(Article $article)
 	{
-		$article = Article::findOrFail($id);
+
+
+//		$article = Article::findOrFail($id);
 
 		// if (is_null($article)) {
 		// 	abort(404);
@@ -76,6 +85,8 @@ class ArticlesController extends Controller {
 	}*/
 
     /**
+     * save new user's article
+     *
      * @param ArticleRequest|Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -93,22 +104,25 @@ class ArticlesController extends Controller {
 
 
     /**
+     * @param Article $article
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
 
-        $article = Article::findorFail($id);
+//        $article = Article::findorFail($id);
 
         return view('articles.edit', compact('article'));
     }
 
-    /*
-     * update article
-     * */
-    public function update($id, ArticleRequest $request)
+    /**
+     * @param Article $article
+     * @param ArticleRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(Article $article, ArticleRequest $request)
     {
-        $article = Article::findorFail($id);
+//        $article = Article::findorFail($id);
         $article->update($request->all());
 
         return redirect('articles');
