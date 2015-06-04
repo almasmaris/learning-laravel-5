@@ -13,8 +13,9 @@ use Laracasts\Flash\Flash;
 
 class ArticlesController extends Controller {
 
-    public function __contruct()
+    public function __construct()
     {
+
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
@@ -60,7 +61,8 @@ class ArticlesController extends Controller {
 	 * create new article
 	 */
 	public function create()
-	{
+    {
+
 		return view('articles.create');
 	}
 
