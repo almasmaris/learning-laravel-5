@@ -14,6 +14,10 @@ use App\Tag;
 
 class ArticlesController extends Controller {
 
+    /**
+     *create a new controllers instance.
+     *
+     */
     public function __construct()
     {
 
@@ -101,9 +105,8 @@ class ArticlesController extends Controller {
 
 //        $article = new Article($request->all());
 
-        $article = Auth::user()->articles()->create($request->all());
 
-        $article->tags()->attach($request->input('tag_list'));
+        $this->createArticle($request);
 
 
 //      session()->flash('flash_message', 'Your article has been created!');
@@ -117,6 +120,9 @@ class ArticlesController extends Controller {
 
 
     /**
+     *
+     *edit an article
+     *
      * @param Article $article
      * @return \Illuminate\View\View
      */
@@ -131,6 +137,9 @@ class ArticlesController extends Controller {
     }
 
     /**
+     *
+     * update the article on database
+     *
      * @param Article $article
      * @param ArticleRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -140,9 +149,38 @@ class ArticlesController extends Controller {
 //        $article = Article::findorFail($id);
         $article->update($request->all());
 
+        $this->syncTags($article, $request->input('tag_list'));
+
         return redirect('articles');
 
 
     }
 
+    /**
+     * Sync up the list of tags in the database
+     *
+     * @param Article $article
+     * @param ArticleRequest $request
+     */
+    private function syncTags(Article $article, array $tags)
+    {
+        $article->tags()->sync($tags);
+    }
+
+    /**
+     * save a new article
+     *
+     * @param ArticleRequest $request
+     * @return mixed
+     */
+    private function createArticle( ArticleRequest $request)
+    {
+        $article = Auth::user()->articles()->create($request->all());
+
+        //$article->tags()->attach($request->input('tag_list'));
+        $this->syncTags($article, $request->input('tag_list'));
+
+
+        return  $article;
+    }
 }
