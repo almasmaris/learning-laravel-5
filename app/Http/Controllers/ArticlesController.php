@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
+use App\Tag;
 
 
 class ArticlesController extends Controller {
@@ -62,8 +63,8 @@ class ArticlesController extends Controller {
 	 */
 	public function create()
     {
-
-		return view('articles.create');
+        $tags = Tag::lists('name', 'id');
+		return view('articles.create', compact('tags'));
 	}
 
 
@@ -100,11 +101,13 @@ class ArticlesController extends Controller {
 
 //        $article = new Article($request->all());
 
-        Auth::user()->articles()->create($request->all());
+        $article = Auth::user()->articles()->create($request->all());
+
+        $article->tags()->attach($request->input('tag_list'));
 
 
-//        session()->flash('flash_message', 'Your article has been created!');
-//        session()->flash('flash_message_important', true);
+//      session()->flash('flash_message', 'Your article has been created!');
+//      session()->flash('flash_message_important', true);
 
 //        flash()->success('Your article has been created!');
         flash()->overlay('Your articles has been successfully created!', 'Good Job');
@@ -122,7 +125,9 @@ class ArticlesController extends Controller {
 
 //        $article = Article::findorFail($id);
 
-        return view('articles.edit', compact('article'));
+        $tags = Tag::lists('name', 'id');
+
+        return view('articles.edit', compact('article', 'tags'));
     }
 
     /**

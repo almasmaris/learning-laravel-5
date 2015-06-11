@@ -17,7 +17,11 @@
     <small class="text-danger">{{ $errors->first('published_at') }}</small>
 </div>
 
-
+<!--- tags Field --->
+<div class="form-group">
+    {!! Form::label('tag_list', 'Tags:') !!}
+    {!! Form::select('tag_list[]', $tags, null,  ['class' => 'form-control', ' multiple']) !!}
+</div>
 
 <div class="form-group">
     {!! Form::submit($submitButton, array('class' => 'btn btn-primary form-control')) !!}

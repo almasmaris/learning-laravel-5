@@ -46,6 +46,7 @@ class Article extends  \Eloquent{
 		$this->attributes['published_at'] = Carbon::parse($date);
 	}
 
+
     /**
      *  An article is owned by a User
      */
@@ -64,5 +65,15 @@ class Article extends  \Eloquent{
     public function tags()
     {
         return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+
+    /**
+     * Get a list of tags ids associates with the current article
+     *
+     * @return array
+     */
+    public function getTagListAttribute()
+    {
+        return $this->tags->lists('id');
     }
 }
