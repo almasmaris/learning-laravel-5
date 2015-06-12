@@ -18,7 +18,7 @@
 				 <a href="{{url('/articles', $article->id)}}">{{$article->title}}</a>
 			</h2>
 			<div class="body">
-				{{$article->body}} 
+				{{$article->body}}
 
 			</div>
 

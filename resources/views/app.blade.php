@@ -11,7 +11,9 @@
 	
 </head>
 <body>
-	<div class="container">
+	@include('partials.navbar')
+
+    <div class="container">
         {{--@include('partials.flash')--}}
         @include('flash::message')
         

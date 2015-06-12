@@ -31,10 +31,9 @@ class ArticlesController extends Controller {
 	public function index()
 	{
 
-
-
 		// $articles = \App\Article::all();
 		$articles = \App\Article::latest('published_at')->published()->get();
+
 
 		return view('articles.index', compact('articles'));
 	}
