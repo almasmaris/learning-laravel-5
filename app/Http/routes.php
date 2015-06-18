@@ -11,6 +11,26 @@
 |
 */
 
+
+interface BarInterface{}
+
+class Bar implements BarInterface{}
+class SecondBar implements BarInterface{}
+
+
+App::bind('BarInterface', 'Bar');
+
+Route::get('bar', function()
+    {
+        $bar = App::make('BarInterface');
+
+        dd($bar);
+
+    }
+);
+
+Route:;get('foo', 'FooController@foo');
+
 Route::get('about', 'PagesController@about');
 Route::get('contact', 'PagesController@contact');
 
