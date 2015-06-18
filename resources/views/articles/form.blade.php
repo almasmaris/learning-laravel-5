@@ -13,7 +13,7 @@
 
 <div class="form-group">
     {!! Form::label('published_at', 'Published_on') !!}
-    {!! Form::input('date','published_at', date('Y-m-d'), array('class' => 'form-control')) !!}
+    {!! Form::input('date','published_at', $article->published_at, array('class' => 'form-control')) !!}
     <small class="text-danger">{{ $errors->first('published_at') }}</small>
 </div>
 

@@ -146,9 +146,12 @@ class ArticlesController extends Controller {
     public function update(Article $article, ArticleRequest $request)
     {
 //        $article = Article::findorFail($id);
+
+
         $article->update($request->all());
 
-        $this->syncTags($article, $request->input('tag_list'));
+
+        $this->syncTags($article, $request->input('tag_list', []));
 
         return redirect('articles');
 
@@ -163,6 +166,7 @@ class ArticlesController extends Controller {
      */
     private function syncTags(Article $article, array $tags)
     {
+
         $article->tags()->sync($tags);
     }
 
@@ -177,7 +181,8 @@ class ArticlesController extends Controller {
         $article = Auth::user()->articles()->create($request->all());
 
         //$article->tags()->attach($request->input('tag_list'));
-        $this->syncTags($article, $request->input('tag_list'));
+
+        $this->syncTags($article, $request->input('tag_list', []));
 
 
         return  $article;
